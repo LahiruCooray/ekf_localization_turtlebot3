@@ -1,0 +1,27 @@
+# EKF Localization Parameters
+
+ekf_localization_node:
+  ros__parameters:
+    # Process noise (motion model uncertainty)
+    process_noise_x: 0.01
+    process_noise_y: 0.01
+    process_noise_theta: 0.01
+
+    # IMU measurement noise (variance in rad²)
+    imu_noise_theta: 0.001
+
+    # GPS measurement noise (variance in m²)
+    # RTK-like: (0.01m)² = 0.0001 for ~1cm accuracy
+    gps_noise_x: 0.0001
+    gps_noise_y: 0.0001
+
+    # Initial state
+    initial_x: 0.0
+    initial_y: 0.0
+    initial_theta: 0.0
+
+    # Prediction rate (Hz)
+    prediction_rate: 50.0
+
+    # TF broadcasting
+    publish_tf: true
