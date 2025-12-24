@@ -25,10 +25,20 @@ class DataLogger(Node):
     def __init__(self):
         super().__init__('data_logger')
 
-        # Create output directory in workspace
-        self.output_dir = os.path.expanduser(
-            '~/repos/ekf_localization_turtlebot3/ekf_logs'
-        )
+        # Parameters
+        self.declare_parameter('experiment', '')
+
+        experiment = self.get_parameter('experiment').value
+
+        # Determine output directory
+        base_dir = os.path.expanduser('~/repos/ekf_localization_turtlebot3')
+        if experiment:
+            # Experiment-specific directory
+            self.output_dir = os.path.join(base_dir, 'experiments', experiment)
+        else:
+            # Default logs directory
+            self.output_dir = os.path.join(base_dir, 'ekf_logs')
+
         os.makedirs(self.output_dir, exist_ok=True)
 
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')

@@ -1,0 +1,21 @@
+# Low Process Noise Configuration
+# High trust in motion model, smoother but may lag
+
+ekf_localization_node:
+  ros__parameters:
+    # Low process noise = trust motion model more
+    process_noise_x: 0.001
+    process_noise_y: 0.001
+    process_noise_theta: 0.001
+
+    imu_noise_theta: 0.001
+
+    gps_noise_x: 0.0001
+    gps_noise_y: 0.0001
+
+    initial_x: 0.0
+    initial_y: 0.0
+    initial_theta: 0.0
+
+    prediction_rate: 50.0
+    publish_tf: true

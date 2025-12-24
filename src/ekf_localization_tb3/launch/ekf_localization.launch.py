@@ -23,11 +23,18 @@ def generate_launch_description():
     model_file = os.path.join(model_path, 'turtlebot3_burger_gps', 'model.sdf')
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
+    config_file = LaunchConfiguration('config', default='ekf_params.yaml')
 
     declare_use_sim_time = DeclareLaunchArgument(
         'use_sim_time',
         default_value='true',
         description='Use simulation clock'
+    )
+
+    declare_config = DeclareLaunchArgument(
+        'config',
+        default_value='ekf_params.yaml',
+        description='Config file name (in config folder)'
     )
 
     gz_resource_path = SetEnvironmentVariable(
@@ -77,16 +84,18 @@ def generate_launch_description():
         name='ekf_localization_node',
         output='screen',
         parameters=[
-            os.path.join(pkg_ekf, 'config', 'ekf_params.yaml'),
+            [pkg_ekf, '/config/', config_file],
             {'use_sim_time': use_sim_time}
         ],
     )
 
     return LaunchDescription([
         declare_use_sim_time,
+        declare_config,
         gz_resource_path,
         gazebo,
         delayed_spawn,
         bridge,
         ekf_node,
     ])
+

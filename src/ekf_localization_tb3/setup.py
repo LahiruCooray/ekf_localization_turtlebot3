@@ -38,6 +38,7 @@ setup(
         'console_scripts': [
             'ekf_localization_node = ekf_localization_tb3.ekf_node:main',
             'data_logger = ekf_localization_tb3.data_logger:main',
+            'trajectory_publisher = ekf_localization_tb3.trajectory_publisher:main',
         ],
     },
 )

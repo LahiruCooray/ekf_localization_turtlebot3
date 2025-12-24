@@ -1,0 +1,21 @@
+# Poor GPS Configuration
+# Simulates standard consumer GPS (~50cm accuracy)
+
+ekf_localization_node:
+  ros__parameters:
+    process_noise_x: 0.01
+    process_noise_y: 0.01
+    process_noise_theta: 0.01
+
+    imu_noise_theta: 0.001
+
+    # Standard GPS: (0.5m)² = 0.25 variance
+    gps_noise_x: 0.25
+    gps_noise_y: 0.25
+
+    initial_x: 0.0
+    initial_y: 0.0
+    initial_theta: 0.0
+
+    prediction_rate: 50.0
+    publish_tf: true

@@ -217,12 +217,23 @@ def print_summary(df, rmse):
 
 def main():
     parser = argparse.ArgumentParser(description='Plot EKF performance data')
-    parser.add_argument('csv_file', nargs='?', help='Path to CSV file')
+    parser.add_argument('path', nargs='?', help='Path to CSV file or directory containing CSV')
     args = parser.parse_args()
 
     # Find CSV file
-    if args.csv_file:
-        csv_path = args.csv_file
+    if args.path:
+        if os.path.isdir(args.path):
+            # Path is a directory, find latest CSV inside
+            log_dir = args.path
+            csv_files = sorted([f for f in os.listdir(log_dir) if f.endswith('.csv') 
+                               and f.startswith('ekf_data')])
+            if not csv_files:
+                print(f"Error: No CSV files found in {log_dir}")
+                sys.exit(1)
+            csv_path = os.path.join(log_dir, csv_files[-1])
+            print(f"Using latest file: {csv_path}")
+        else:
+            csv_path = args.path
     else:
         # Default to workspace ekf_logs directory
         log_dir = os.path.expanduser('~/repos/ekf_localization_turtlebot3/ekf_logs')
@@ -243,7 +254,7 @@ def main():
     df = pd.read_csv(csv_path)
     print(f"Loaded {len(df)} data points\n")
 
-    # Create output directory
+    # Create output directory (same as CSV location)
     output_dir = os.path.dirname(csv_path)
 
     # Generate plots

@@ -154,7 +154,9 @@
               <noise type="gaussian">
                 <mean>0</mean>
                 <!-- RTK-like: 0.0000001 deg ≈ 1.1 cm -->
-                <stddev>0.0000001</stddev>
+               <!-- <stddev>0.0000001</stddev> -->
+              <!-- for poor GPS -->
+              <stddev>0.000005</stddev>
               </noise>
             </horizontal>
             <vertical>
